@@ -1,0 +1,85 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-percentage-by-region"><?= $this->translate('Percentage tax per region') ?></a>
+        </h4>
+    </div>
+    <div id="collapse-percentage-by-region" class="panel-collapse collapse">
+        <div class="panel-body">
+            <div class="row">
+                <button type="button" title="<?= $this->translate('Add new percentage tax per region') ?>" class="btn btn-success pull-right" data-add-form="/<?= $this->module_name ?>/add-percentage-tax-per-region.form<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <?= $this->translate('Add'); ?>
+                </button>
+                <button style="margin-right:15px" type="button" title="<?= $this->translate('Copy table') ?>" class="btn btn-success pull-right" data-add-form="/<?= $this->module_name ?>/copy-percentage-tax-per-region.form<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <?= $this->translate('Copy table'); ?>
+                </button>
+            </div>
+            <div class="row">
+                <form method="POST" action="/<?= $this->module_name ?>/table-percentage-tax-by-region<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>">
+                    <input type="hidden" name="company" value="<?= $this->companyModel->getCurrentPeopleCompany()->getId() ?>">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="percentage-tax-by-region-origin"><?= $this->translate('Region origin') ?>:</label>
+                            <select  data-change-container="#percentage-tax-by-region" class="form-control" id="percentage-tax-by-region-origin" name="from-region-origin">
+                                <?php foreach ($this->delivery_region as $deliveryRegion) { ?>
+                                    <option value="<?= $deliveryRegion->getId() ?>" <?= ($this->percentageTaxByRegion && $deliveryRegion->getId() == $this->percentageTaxByRegion[0]->getRegionOrigin()->getId() ? 'SELECTED' : '') ?>><?= $deliveryRegion->getRegion() ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="percentage-tax-by-region-destination"><?= $this->translate('Region destination') ?>:</label>
+                            <select  data-change-container="#percentage-tax-by-region" class="form-control" id="percentage-tax-by-region-destination" name="from-region-destination">
+                                <?php foreach ($this->delivery_region as $deliveryRegion) { ?>
+                                    <option value="<?= $deliveryRegion->getId() ?>" <?= ($this->percentageTaxByRegion && $deliveryRegion->getId() == $this->percentageTaxByRegion[0]->getRegionDestination()->getId() ? 'SELECTED' : '') ?>><?= $deliveryRegion->getRegion() ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <br><br>
+        <div id="percentage-tax-by-region">
+            <table data-table="percentage-tax-by-region" class="datatable table table-striped primary" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th><?= $this->translate('Tax name') ?></th>
+                        <th><?= $this->translate('Shipping Retrieve Area') ?></th>
+                        <th><?= $this->translate('Shipping Delivery Area') ?></th>
+                        <th><?= $this->translate('Final Weight') ?></th>
+                        <th><?= $this->translate('Percentage') ?></th>
+                        <th><?= $this->translate('Percentage Type') ?></th>
+                        <th><?= $this->translate('Minimum tax') ?></th>
+                        <th><?= $this->translate('Optional') ?></th>
+                        <th><?= $this->translate('Deadline') ?></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-table-body="percentage-tax-by-region">
+                    <?php foreach ($this->percentageTaxByRegion as $percentageTaxByRegion) { ?>
+                        <tr id="tax-<?= $percentageTaxByRegion->getId() ?>">
+                            <td><?= $percentageTaxByRegion->getTaxName() ?></td>
+                            <td><?= $percentageTaxByRegion->getRegionOrigin()->getRegion() ?></td>
+                            <td><?= $percentageTaxByRegion->getRegionDestination()->getRegion() ?></td>
+                            <td><?= ($percentageTaxByRegion->getFinalWeight() >= 10000 ? '&infin;' : number_format($percentageTaxByRegion->getFinalWeight(), 3, ',', '.') . ' kg') ?></td>
+                            <td><?= number_format($percentageTaxByRegion->getPrice(), 2, ',', '.') ?> %</td>
+                            <td><?= $this->translate(ucfirst($percentageTaxByRegion->getTaxSubtype())) ?></td>
+                            <td><?= $this->translate('corrency_symbol') . ' ' . number_format($percentageTaxByRegion->getMinimumPrice(), 2, ',', '.') ?></td>
+                            <td><?= ($percentageTaxByRegion->getOptional() ? '<i class="fa fa-check-square-o" aria-hidden="true"></i>' : '<i class="fa fa-icon-check-empty icon-check-empty" aria-hidden="true"></i>' ) ?></td>
+                            <td><?= $percentageTaxByRegion->getRegionDestination()->getDeadline() . ' ' . ($percentageTaxByRegion->getRegionDestination()->getDeadline() > 1 ? $this->translate('days') : $this->translate('day')) ?></td>
+                            <td>
+                                <button data-container-remove="tax" data-delete-name="<?= $this->translate('Delete') ?>" data-calcel-name="<?= $this->translate('Cancel') ?>" data-header="<?= $this->translate('Confirm delete this tax?') ?>" data-body="<?= $percentageTaxByRegion->getTaxName() ?>" data-toggle="modal" data-target="#confirm-delete" data-id="<?= $percentageTaxByRegion->getId() ?>" data-delete-confirm="/<?= $this->module_name ?>/delete-tax.json<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>" name="confirm-delete-<?= $percentageTaxByRegion->getId() ?>" id="confirm-delete-<?= $percentageTaxByRegion->getId() ?>" type="submit" class="confirm-delete btn btn-danger">
+                                    <?= $this->translate('Delete'); ?>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

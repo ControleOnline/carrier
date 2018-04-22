@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-fixed-by-weight"><?= $this->translate('Fixed tax by weight') ?></a>
+        </h4>
+    </div>
+    <div id="collapse-fixed-by-weight" class="panel-collapse collapse">
+        <div class="panel-body">
+            <div class="row">
+                <button type="button" title="<?= $this->translate('Add new tax by weight') ?>" class="btn btn-success pull-right" data-add-form="/<?= $this->module_name ?>/add-tax-by-weight.form<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <?= $this->translate('Add'); ?>
+                </button>
+            </div>
+            <table data-table="tax-by-weight" class="datatable table table-striped primary" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th><?= $this->translate('Tax name') ?></th>
+                        <th><?= $this->translate('Final Weight') ?></th>
+                        <th><?= $this->translate('Tax price') ?></th>
+                        <th><?= $this->translate('Fraction') ?></th>
+                        <th><?= $this->translate('Optional') ?></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-table-body="tax-by-weight">
+                    <?php foreach ($this->fixedTaxByWeight as $fixedTaxByWeight) { ?>
+                        <tr id="tax-<?= $fixedTaxByWeight->getId() ?>">
+                            <td><?= $fixedTaxByWeight->getTaxName() ?></td>
+                            <td><?= ($fixedTaxByWeight->getFinalWeight() >= 10000 ? '&infin;' : number_format($fixedTaxByWeight->getFinalWeight(), 3, ',', '.') . ' kg') ?></td>
+                            <td><?= $this->translate('corrency_symbol') .' '. number_format($fixedTaxByWeight->getPrice(), 2, ',', '.') ?></td>
+                            <td><?= number_format($fixedTaxByWeight->getMinimumPrice(), 3, ',', '.') ?> kg</td>
+                            <td><?= ($fixedTaxByWeight->getOptional() ? '<i class="fa fa-check-square-o" aria-hidden="true"></i>' : '<i class="fa fa-icon-check-empty icon-check-empty" aria-hidden="true"></i>' ) ?></td>
+                            <td>
+                                <button data-container-remove="tax" data-delete-name="<?= $this->translate('Delete') ?>" data-calcel-name="<?= $this->translate('Cancel') ?>" data-header="<?= $this->translate('Confirm delete this tax?') ?>" data-body="<?= $fixedTaxByWeight->getTaxName() ?>" data-toggle="modal" data-target="#confirm-delete" data-id="<?= $fixedTaxByWeight->getId() ?>" data-delete-confirm="/<?= $this->module_name ?>/delete-tax.json<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>" name="confirm-delete-<?= $fixedTaxByWeight->getId() ?>" id="confirm-delete-<?= $fixedTaxByWeight->getId() ?>" type="submit" class="confirm-delete btn btn-danger">
+                                    <?= $this->translate('Delete'); ?>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

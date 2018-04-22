@@ -1,0 +1,65 @@
+<div class="modal fade" id="modal-new" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;
+                </button>
+                <h4 class="modal-title"><?= ucfirst($this->translate('Add area')) ?></h4>
+            </div>
+            <div class="modal-body">                
+                <fieldset>                    
+                    <form class="api-form form-horizontal" data-clone-field="[data-clone=add-area]" data-clone-target="[data-table-body='area']" action="/<?= $this->module_name ?>/add-area.json" method="POST" name="form-add-area" role="form" >
+                        <!-- Form Name -->
+                        <input type="hidden" name="company_id" value="<?= $this->companyModel->getCurrentPeopleCompany() ? $this->companyModel->getCurrentPeopleCompany()->getId() : '' ?>">
+                        <input name="method" value="POST" type="hidden">
+                        <div class="form-group">
+                            <label class="control-label col-md-6" id="label-add-area" for="input-add-area"><?= $this->translate('Area') ?>: </label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="input-add-area" name="area" >                                    
+                            </div>                                            
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-6" id="label-add-state" for="input-add-retrieve-tax"><?= $this->translate('Retrieve Tax') ?>: </label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="input-add-retrieve-tax" name="retrieve-tax">                                    
+                            </div>                                            
+                        </div>                        
+                        <div class="form-group">
+                            <label class="control-label col-md-6" id="label-add-deadline" for="input-add-deadline"><?= $this->translate('Deadline') ?>: </label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="input-add-deadline" name="deadline" >                                    
+                            </div>                                            
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-6" id="label-add-state" for="input-add-state"><?= $this->translate('State') ?>: </label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="input-add-state" name="state">
+                                    <?php foreach ($this->states AS $state) { ?>
+                                        <option value="<?= $state->getId() ?>"><?= $state->getUf() ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>                                            
+                        </div>                        
+                        <div class="form-group">
+                            <label class="control-label col-md-6" id="label-add-city" for="input-add-city"><?= $this->translate('Cities') ?>: </label>
+                            <div class="col-md-6">
+                                <textarea class="form-control" id="input-add-city" name="cities"></textarea>
+                            </div>                                            
+                        </div>                        
+                        <div class="form-group">
+                            <div class="col-md-2"></div>                
+                            <div class="col-md-8">                                
+                                <button data-table-row-fields="area,cities,deadline,retrieve_tax," data-table-field="[data-table='area']" data-add="/<?= $this->module_name ?>/add-area.json" name="add-area" type="submit" class="btn btn-success pull-right">
+                                    <?= ucfirst($this->translate('Add area')) ?>
+                                </button>                                                                                        
+                            </div>
+                            <div class="col-md-2"></div>                
+                        </div>
+                    </form>                    
+                </fieldset>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>

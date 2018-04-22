@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-percentage"><?= $this->translate('Percentage tax') ?></a>
+        </h4>
+    </div>
+    <div id="collapse-percentage" class="panel-collapse collapse">
+        <div class="panel-body">
+            <div class="row">
+                <button type="button" title="<?= $this->translate('Add new percentage tax') ?>" class="btn btn-success pull-right" data-add-form="/<?= $this->module_name ?>/add-percentage-tax.form<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                    <?= $this->translate('Add'); ?>
+                </button>
+            </div>
+            <table data-table="percentage-tax" class="datatable table table-striped primary" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th><?= $this->translate('Tax name') ?></th>
+                        <th><?= $this->translate('Tax percentage') ?></th>
+                        <th><?= $this->translate('Percentage Type') ?></th>
+                        <th><?= $this->translate('Minimum tax') ?></th>
+                        <th><?= $this->translate('Optional') ?></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-table-body="percentage-tax">
+                    <?php foreach ($this->percentageTax as $percentageTax) { ?>
+                        <tr id="tax-<?= $percentageTax->getId() ?>">
+                            <td><?= $percentageTax->getTaxName() ?></td>
+                            <td><?= number_format($percentageTax->getPrice(), 2, ',', '.') ?> %</td>
+                            <td><?= $this->translate(ucfirst($percentageTax->getTaxSubtype())) ?></td>
+                            <td><?= $this->translate('corrency_symbol') .' '. number_format($percentageTax->getMinimumPrice(), 2, ',', '.') ?></td>
+                            <td><?= ($percentageTax->getOptional() ? '<i class="fa fa-check-square-o" aria-hidden="true"></i>' : '<i class="fa fa-icon-check-empty icon-check-empty" aria-hidden="true"></i>') ?></td>
+                            <td>
+                                <button data-container-remove="tax" data-delete-name="<?= $this->translate('Delete') ?>" data-calcel-name="<?= $this->translate('Cancel') ?>" data-header="<?= $this->translate('Confirm delete this tax?') ?>" data-body="<?= $percentageTax->getTaxName() ?>" data-toggle="modal" data-target="#confirm-delete" data-id="<?= $percentageTax->getId() ?>" data-delete-confirm="/<?= $this->module_name ?>/delete-tax.json<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>" name="confirm-delete-<?= $percentageTax->getId() ?>" id="confirm-delete-<?= $percentageTax->getId() ?>" type="submit" class="confirm-delete btn btn-danger">
+                                    <?= $this->translate('Delete'); ?>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+<div role="tabpanel" class="tab-pane" id="shipping-area">
+    <button type="button" title="<?= $this->translate('Add new area') ?>" class="btn btn-success pull-right" data-add-form="/<?= $this->module_name ?>/add-area.form<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        <?= $this->translate('Add'); ?>
+    </button>
+    <h3><?= $this->translate('Shipping Areas') ?></h3>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table data-table="area" class="datatable table table-striped primary" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th><?= $this->translate('Shipping Area') ?></th>
+                        <th><?= $this->translate('Cities') ?></th>
+                        <th><?= $this->translate('Deadline') ?></th>
+                        <th><?= $this->translate('Retrieve Tax') ?></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-table-body="area">
+                    <?php foreach ($this->delivery_region as $deliveryRegion) { ?>
+                        <tr id="tax-region-<?= $deliveryRegion->getId() ?>">
+                            <td><?= $deliveryRegion->getRegion() ?></td>
+                            <td>
+                                <?= $this->delivery_region_cities[array_search($deliveryRegion->getId(), array_column($this->delivery_region_cities, 'id'))]['cities']; ?>                                
+                            </td>
+                            <td><?= $deliveryRegion->getDeadline() . ' ' . ($deliveryRegion->getDeadline() > 1 ? $this->translate('days') : $this->translate('day')) ?></td>
+                            <td><?= $this->translate('corrency_symbol') . ' ' . number_format($deliveryRegion->getRetrieveTax(), 2, ',', '.') ?></td>
+                            <td>
+                                <button data-container-remove="tax-region" data-delete-name="<?= $this->translate('Delete') ?>" data-calcel-name="<?= $this->translate('Cancel') ?>" data-header="<?= $this->translate('Confirm delete this region?') ?>" data-body="<?= $deliveryRegion->getRegion() ?>" data-toggle="modal" data-target="#confirm-delete" data-id="<?= $deliveryRegion->getId() ?>" data-delete-confirm="/<?= $this->module_name ?>/delete-region.json<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>" name="confirm-delete-<?= $deliveryRegion->getId() ?>" id="confirm-delete-<?= $deliveryRegion->getId() ?>" type="submit" class="confirm-delete btn btn-danger">
+                                    <?= $this->translate('Delete'); ?>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

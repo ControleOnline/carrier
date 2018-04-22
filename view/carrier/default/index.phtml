@@ -1,0 +1,29 @@
+<?php
+
+$this->tabs = '<li role="shipping-retrieve-area" class="">
+                    <a href="#shipping-area" aria-controls="shipping-area" role="tab" data-toggle="tab" aria-expanded="true">                        
+                        <span class="glyphicon glyphicon-road"></span> ' . $this->translate('Shipping Areas') . '
+                    </a>
+                </li>';
+$this->tabs .= '<li role="shipping-table" class="">
+                    <a href="#shipping-table" aria-controls="shipping-table" role="tab" data-toggle="tab" aria-expanded="true">                        
+                        <span class="glyphicon glyphicon-road"></span> ' . $this->translate('Shipping Table') . '
+                    </a>
+                </li>';
+$this->tabs .= '<li role="restriction-material" class="">
+                    <a href="#restriction-material" aria-controls="restriction-material" role="tab" data-toggle="tab" aria-expanded="true">                        
+                        <span class="glyphicon glyphicon-road"></span> ' . $this->translate('Restriction Material') . '
+                    </a>
+                </li>';
+
+$this->panels .= $this->partial('tables/delivery-region.phtml');
+
+$this->panels .= $this->partial('tables/delivery-tax.phtml');
+
+$this->panels .= $this->partial('tables/delivery-restriction-material.phtml');
+
+
+?>
+
+
+<?= $this->render('company/default/company.phtml'); ?>

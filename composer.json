@@ -1,0 +1,21 @@
+{
+    "name": "controleonline/carrier",
+    "description": "Controle Online - Carrier Module",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "Carrier"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Carrier\\": "src/Carrier"
+        },
+        "classmap": [
+            "Module.php"
+        ]
+    },
+    "homepage": "https://github.com/ControleOnline/carrier",
+    "require": {
+        "controleonline/core": "*",
+        "controleonline/user": "*"
+    }    
+}

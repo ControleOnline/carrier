@@ -1,0 +1,72 @@
+<div class="modal fade" id="modal-new" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;
+                </button>
+                <h4 class="modal-title"><?= ucfirst($this->translate('Add tax by region')) ?></h4>
+            </div>
+            <div class="modal-body">                
+                <fieldset>                    
+                    <form class="api-form form-horizontal" data-clone-field="[data-clone=add-percentage-tax-by-region]" data-clone-target="[data-table-body='percentage-tax-by-region']" action="/<?= $this->module_name ?>/add-percentage-tax-per-region.json" method="POST" name="form-add-percentage-tax-by-region" role="form" >
+                        <!-- Form Name -->                        
+                        <input type="hidden" name="company_id" value="<?= $this->companyModel->getCurrentPeopleCompany() ? $this->companyModel->getCurrentPeopleCompany()->getId() : '' ?>">
+                        <input name="method" value="POST" type="hidden">                        
+                        <div class="form-group">
+                            <label class="control-label col-md-6" id="label-region-origin" for="input-region-origin"><?= $this->translate('From region origin') ?>: </label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="input-region-origin" name="from-region-origin">
+                                    <?php foreach ($this->delivery_region AS $region) { ?>
+                                        <option value="<?= $region->getId() ?>" <?= $this->percentageTaxByRegion[0]->getRegionOrigin()->getId() === $region->getId() ? 'SELECTED' : '' ?>><?= $region->getRegion() ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>                                            
+                        </div>        
+                        <div class="form-group">
+                            <label class="control-label col-md-6" id="label-region-origin" for="input-region-destination"><?= $this->translate('From region destination') ?>: </label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="input-region-destination" name="from-region-destination">
+                                    <?php foreach ($this->delivery_region AS $region) { ?>
+                                        <option value="<?= $region->getId() ?>"><?= $region->getRegion() ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>                                            
+                        </div>                        
+
+                        <div class="form-group">
+                            <label class="control-label col-md-6" id="label-region-origin" for="input-region-origin"><?= $this->translate('To region origin') ?>: </label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="input-region-origin" name="to-region-origin">
+                                    <?php foreach ($this->delivery_region AS $region) { ?>
+                                        <option value="<?= $region->getId() ?>" <?= $this->percentageTaxByRegion[0]->getRegionOrigin()->getId() === $region->getId() ? 'SELECTED' : '' ?>><?= $region->getRegion() ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>                                            
+                        </div>        
+                        <div class="form-group">
+                            <label class="control-label col-md-6" id="label-region-origin" for="input-region-destination"><?= $this->translate('To region destination') ?>: </label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="input-region-destination" name="to-region-destination">
+                                    <?php foreach ($this->delivery_region AS $region) { ?>
+                                        <option value="<?= $region->getId() ?>"><?= $region->getRegion() ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>                                            
+                        </div>                        
+                        <div class="form-group">
+                            <div class="col-md-2"></div>                
+                            <div class="col-md-8">                                
+                                <button data-success-url="/<?= $this->module_name ?>/<?= $this->companyModel->getCurrentPeopleCompany() ? $this->companyModel->getCurrentPeopleCompany()->getId() : '' ?>" data-add="/<?= $this->module_name ?>/copy-percentage-tax-per-region.json" name="copy-percentage-tax-by-region" type="submit" class="btn btn-success pull-right">
+                                    <?= ucfirst($this->translate('Copy tax')) ?>
+                                </button>                                                                                        
+                            </div>
+                            <div class="col-md-2"></div>                
+                        </div>
+                    </form>                    
+                </fieldset>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>

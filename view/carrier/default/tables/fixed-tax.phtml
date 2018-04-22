@@ -1,0 +1,46 @@
+    <h3><?= $this->translate('Shipping Table') ?></h3>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse-fixed"><?= $this->translate('Fixed tax') ?></a>
+                </h4>
+            </div>
+            <div id="collapse-fixed" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <div class="row">
+                        <button type="button" title="<?= $this->translate('Add new fixed tax') ?>" class="btn btn-success pull-right" data-add-form="/<?= $this->module_name ?>/add-fixed-tax.form<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                            <?= $this->translate('Add'); ?>
+                        </button>
+                    </div>
+                    <table data-table="fixed-tax" class="datatable table table-striped primary" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th><?= $this->translate('Tax name') ?></th>
+                                <th><?= $this->translate('Tax price') ?></th>
+                                <th><?= $this->translate('Minimum tax') ?></th>
+                                <th><?= $this->translate('Optional') ?></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody data-table-body="fixed-tax">
+                            <?php foreach ($this->fixedTax as $fixedTax) { ?>
+                                <tr id="tax-<?= $fixedTax->getId() ?>">
+                                    <td><?= $fixedTax->getTaxName() ?></td>
+                                    <td><?= $this->translate('corrency_symbol') .' '. number_format($fixedTax->getPrice(), 2, ',', '.') ?></td>
+                                    <td><?= $this->translate('corrency_symbol') .' '. number_format($fixedTax->getMinimumPrice(), 2, ',', '.') ?></td>
+                                    <td><?= ($fixedTax->getOptional() ? '<i class="fa fa-check-square-o" aria-hidden="true"></i>' : '<i class="fa fa-icon-check-empty icon-check-empty" aria-hidden="true"></i>') ?></td>
+                                    <td>
+                                        <button data-container-remove="tax" data-delete-name="<?= $this->translate('Delete') ?>" data-calcel-name="<?= $this->translate('Cancel') ?>" data-header="<?= $this->translate('Confirm delete this tax?') ?>" data-body="<?= $fixedTax->getTaxName() ?>" data-toggle="modal" data-target="#confirm-delete" data-id="<?= $fixedTax->getId() ?>" data-delete-confirm="/<?= $this->module_name ?>/delete-tax.json<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>" name="confirm-delete-<?= $fixedTax->getId() ?>" id="confirm-delete-<?= $fixedTax->getId() ?>" type="submit" class="confirm-delete btn btn-danger">
+                                            <?= $this->translate('Delete'); ?>
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

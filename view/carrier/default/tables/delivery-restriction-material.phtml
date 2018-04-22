@@ -1,0 +1,33 @@
+<div role="tabpanel" class="tab-pane" id="restriction-material">
+    <button type="button" title="<?= $this->translate('Add new restriction of material') ?>" class="btn btn-success pull-right" data-add-form="/<?= $this->module_name ?>/add-restriction-material.form<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        <?= $this->translate('Add'); ?>
+    </button>
+    <h3><?= $this->translate('Restriction of material') ?></h3>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <table data-table="restriction-material" class="datatable table table-striped primary" cellspacing="0" width="100%">
+                <thead>
+                    <tr>
+                        <th><?= $this->translate('Material') ?></th>
+                        <th><?= $this->translate('Restriction Type') ?></th>                        
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-table-body="restriction-material">
+                    <?php foreach ($this->restriction_material as $restrictionMaterial) { ?>
+                        <tr id="restriction-material-<?= $restrictionMaterial->getId() ?>">
+                            <td><?= $restrictionMaterial->getProductMaterial()->getMaterial() ?></td>
+                            <td class="<?= $restrictionMaterial->getRestrictionType() ?>"><?= $this->translate($restrictionMaterial->getRestrictionType()) ?></td>
+                            <td>
+                                <button data-container-remove="restriction-material" data-delete-name="<?= $this->translate('Delete') ?>" data-calcel-name="<?= $this->translate('Cancel') ?>" data-header="<?= $this->translate('Confirm delete this restriction of material?') ?>" data-body="<?= $restrictionMaterial->getProductMaterial()->getMaterial() ?>" data-toggle="modal" data-target="#confirm-delete" data-id="<?= $restrictionMaterial->getId() ?>" data-delete-confirm="/<?= $this->module_name ?>/delete-restriction-material.json<?= ($this->companyModel->getCurrentPeopleCompany() ? '?company_id=' . $this->companyModel->getCurrentPeopleCompany()->getId() : '') ?>" name="confirm-delete-<?= $restrictionMaterial->getId() ?>" id="confirm-delete-<?= $restrictionMaterial->getId() ?>" type="submit" class="confirm-delete btn btn-danger">
+                                    <?= $this->translate('Delete'); ?>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
