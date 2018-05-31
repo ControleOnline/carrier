@@ -6,7 +6,7 @@ use Carrier\Model\CarrierModel;
 use Core\Model\ErrorModel;
 
 
-class DefaultController extends \Sales\Controller\DefaultController {
+class DefaultController extends \Core\Controller\CompanyController {
     /*
      * @todo Arrumar essa permissão
      */
